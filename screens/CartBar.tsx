@@ -18,9 +18,10 @@ export default function CartBar(props: NavigationProps){
             <Text style={styles.cart_text}>Cart</Text>
         
         {cartItems > 0 && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{cartItems}</Text>
-            </View>
+           
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{cartItems}</Text>
+                </View>
           )}
           </View>
        </Pressable>

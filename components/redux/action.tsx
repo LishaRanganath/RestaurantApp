@@ -1,4 +1,4 @@
-import {Add_To_Cart} from "./constant"
+import {Add_To_Cart , Remove_Form_Cart , Clear_Cart} from "./constant"
 import { MenuProp } from "@/types/types";
 
 
@@ -8,4 +8,17 @@ export function addToCart(item: MenuProp){
         type: Add_To_Cart, 
         payload: item,     
     };
+}
+
+export function removeFromCart(name: string){
+    return {
+        type: Remove_Form_Cart, 
+        payload: name,     
+    };
+}
+
+export function clearCart(){
+    return {
+        type: Clear_Cart
+    }
 }

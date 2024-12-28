@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet, ScrollView, Image, Button, Pressable } from "react-native"
-import { Add_To_Cart } from "@/components/redux/constant"
-import {useDispatch} from 'react-redux'
-import { addToCart } from "@/components/redux/action"
+// import { Add_To_Cart } from "@/components/redux/constant"
+import {useDispatch , useSelector} from 'react-redux'
+import { addToCart , removeFromCart } from "@/components/redux/action"
+import { RootState } from "@/components/redux/rootReducer"
+import { useEffect, useState } from "react"
 
 interface MenuProp{
     name: string,
@@ -11,17 +13,40 @@ interface MenuProp{
 export default function MenuItem({item} : {item: MenuProp}){
 
     const dispatch = useDispatch()
+    const cartItems = useSelector((state: RootState) => state.reducer)
+    const [isAdded,setIsAdded] = useState(false)
 
     const handleAddToCart = (item: MenuProp) =>{
         // console.warn("called",item)
         dispatch(addToCart(item))
     }
+    const handleRemoveFromCart = (item:MenuProp) =>{
+        // console.log(item)
+        dispatch(removeFromCart(item.name))
+    }
+
+    useEffect(()=>{
+       let result = cartItems.filter((elem: MenuProp ) =>{
+            return elem.name === item.name
+       })
+       if(result.length){
+        setIsAdded(true)
+       }
+       else{
+        setIsAdded(false)
+       }
+    },[cartItems])
     return(
             <View style={styles.container}>
                 <Image source={item.image} style={styles.image}></Image>
                 <Text style ={styles.text_data}>{item.name}</Text>
                 <Text style ={styles.text_data}>{item.price}</Text>
-                <Pressable style={styles.button_style} onPress={()=>{handleAddToCart(item)}}><Text style={styles.button_text}>Add To Cart</Text></Pressable>
+                {
+                    isAdded?
+                    <Pressable style={styles.button_style} onPress={()=>{handleRemoveFromCart(item)}}><Text style={styles.button_text}>Remove From cart</Text></Pressable>
+                    :
+                    <Pressable style={styles.button_style} onPress={()=>{handleAddToCart(item)}}><Text style={styles.button_text}>Add To Cart</Text></Pressable>
+                }
             </View>
     )
 }
