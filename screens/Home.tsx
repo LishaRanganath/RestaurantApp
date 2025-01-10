@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Pressable } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
+import { NavigationProps } from '@/types/types';
 
-interface NavigationProps {
-  navigation: any; 
-}
 
 export default function Home(props: NavigationProps) {
   const imageloc = require('../assets/images/food.png');
@@ -17,10 +15,10 @@ export default function Home(props: NavigationProps) {
       <Pressable
         style={styles.button_container}
         onPress={() => {
-          props.navigation.navigate('Menu'); // Accessing navigation via props
+          props.navigation.navigate('Login'); // Accessing navigation via props
         }}
       >
-        <Text style={styles.button_text}>Click to continue -{'>'}</Text>
+        <Text style={styles.button_text}>Login to continue -{'>'}</Text>
       </Pressable>
     </SafeAreaView>
   );

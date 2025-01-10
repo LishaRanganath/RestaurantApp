@@ -7,3 +7,7 @@ export interface MenuProp {
 export interface NavigationProps{
     navigation: any;
 }
+
+export interface NavigationProps {
+    navigation: any; 
+  }
