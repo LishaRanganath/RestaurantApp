@@ -14,6 +14,7 @@ export default function MenuItem({item} : {item: MenuProp}){
 
     const dispatch = useDispatch()
     const cartItems = useSelector((state: RootState) => state.reducer)
+    // const role = useSelector((state: RootState) => state.userReducer.role)
     const [isAdded,setIsAdded] = useState(false)
 
     const handleAddToCart = (item: MenuProp) =>{
@@ -36,6 +37,7 @@ export default function MenuItem({item} : {item: MenuProp}){
         setIsAdded(false)
        }
     },[cartItems])
+
     return(
             <View style={styles.container}>
                 <Image source={item.image} style={styles.image}></Image>

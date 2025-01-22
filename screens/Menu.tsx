@@ -41,6 +41,7 @@ export default function Menu({ navigation }: NavigationProps){
         <>
             <CartBar navigation={navigation} />
             <ScrollView contentContainerStyle={styles.view_container}>
+                <Text></Text>
                 {mappedItems}
             </ScrollView>
     </>

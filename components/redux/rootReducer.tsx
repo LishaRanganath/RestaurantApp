@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import { reducer } from './reducer'; // Import your individual reducers
+import { userReducer } from './userReducer';
 
 // Combine all reducers
 const rootReducer = combineReducers({
-  reducer, // Add all your reducers here
+  reducer,
+  userReducer // Add all your reducers here
 });
 
 // Create the RootState type

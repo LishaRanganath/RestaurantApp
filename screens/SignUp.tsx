@@ -1,10 +1,66 @@
-import { Text , View , Pressable , TextInput , StyleSheet} from "react-native"
+import { Text , View , Pressable , TextInput , StyleSheet, Alert} from "react-native"
 import { NavigationProps } from "@/types/types";
+import { useState } from "react";
+import axios from 'axios';
+
 
 export default function SignUp(props : NavigationProps){
+ const [userDetails , setUserDetails] = useState({
+  name: '',
+  email: '',
+  password: ''
+ })
+
+ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+ const signUpUrl = "http://192.168.1.14:8085/restaurantapp/signUp/User"
+
+ const validateForm = () =>{
+  if(!userDetails.name){
+    Alert.alert("Validation Error: Please Enter the Name")
+    return false
+  }
+  if(!emailRegex.test(userDetails.email)){
+    Alert.alert("Validation Error: Please Enter the Email in the right format")
+    return false
+  }
+  if(!(userDetails.password.length == 8 )){
+    Alert.alert("The passowrd entered must be of size 8")
+    return false
+  }
+  return true
+ }
+
+ const signUpUser = async() =>{
+
+  if(!validateForm())
+  {
+    return
+  }
+
+  try{
+    const response = await axios.post(`${signUpUrl}`,userDetails)
+    const result = response.data
+
+    if(result){
+      Alert.alert("Sign-Up was successful")
+      props.navigation.navigate("Menu")
+      console.log("User-Sign up done")
+    }
+    else{
+      Alert.alert("Some error occured , Please Try Again!!")
+    }
+  }
+  catch(error){
+    Alert.alert("An Error Occured Sorry")
+    console.log(error)
+  }
+
+ }
+
     return(
         <View style={styles.main_conatiner}>
-              <Text style={styles.main_text}>Login</Text>
+              <Text style={styles.main_text}>Sign-Up</Text>
               <View style={styles.conatiner}>
               <View style={styles.field_container}>
                   <Text style={styles.text}>Username:</Text>
@@ -12,6 +68,7 @@ export default function SignUp(props : NavigationProps){
                     style={styles.form_field}
                     placeholder="Enter your Name"
                     placeholderTextColor="#b3b3b3"
+                    onChangeText={(text) => setUserDetails(prevState => ({...prevState , name: text}))}
                   />
                 </View>
                 <View style={styles.field_container}>
@@ -20,6 +77,7 @@ export default function SignUp(props : NavigationProps){
                     style={styles.form_field}
                     placeholder="Enter your Email-id"
                     placeholderTextColor="#b3b3b3"
+                    onChangeText={(text) => setUserDetails(prevState => ({...prevState , email: text}))}
                   />
                 </View>
                 <View style={styles.field_container}>
@@ -28,9 +86,12 @@ export default function SignUp(props : NavigationProps){
                     style={styles.form_field}
                     placeholder="Enter your Password"
                     placeholderTextColor="#b3b3b3"
+                    onChangeText={(text) => setUserDetails(prevState => ({...prevState , password: text}))}
+
                   />
                 </View>
-                <Pressable style={styles.login_button_style}>
+                <Pressable style={styles.login_button_style}
+                  onPress={signUpUser}>
                   <Text style={styles.text}>SignUp</Text>
                 </Pressable>
                 <Text style={{ fontSize: 20 }}>Already Have an Account?</Text>

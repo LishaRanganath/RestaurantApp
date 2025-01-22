@@ -1,4 +1,4 @@
-import {Add_To_Cart , Remove_Form_Cart , Clear_Cart} from "./constant"
+import {Add_To_Cart , Remove_Form_Cart , Clear_Cart , Set_Role} from "./constant"
 import { MenuProp } from "@/types/types";
 
 
@@ -20,5 +20,12 @@ export function removeFromCart(name: string){
 export function clearCart(){
     return {
         type: Clear_Cart
+    }
+}
+
+export function userRole(role: string){
+    return{
+        type: Set_Role,
+        payload: role
     }
 }
